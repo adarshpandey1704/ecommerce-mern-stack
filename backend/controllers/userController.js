@@ -3,7 +3,7 @@ import generateToken from '../config/generateToken.js';
 
 const registerUser = async(req,res) => {
     try {
-    //   console.log('requestBody', req.body);
+      console.log('requestBody', req.body);
     const {name, email, password, about} = req.body;
     const userExists = await User.findOne({email});
     if(userExists) {
@@ -18,6 +18,8 @@ const registerUser = async(req,res) => {
         password: password,
         about: about
     })
+
+    console.log('user in backend controller', user);
 
     if(user) {
         res.status(201).json({

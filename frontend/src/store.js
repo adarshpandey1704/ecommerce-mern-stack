@@ -1,10 +1,11 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { userRegisterReducer } from "./reducers/userReducer";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { userRegisterReducer, userLoginReducer } from './reducers/userReducer';
 
 const reducer = combineReducers({
   userRegisterReducer: userRegisterReducer,
+  userLoginReducer: userLoginReducer
 });
 
 const initialState = {};

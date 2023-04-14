@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import Header from "../components/Header";
-import { useDispatch } from "react-redux";
-import { StyledCard, StyledDiv, StyledFormDiv, StyledBox } from "./Styled";
+import React, { useState } from 'react';
+import Header from '../components/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { StyledCard, StyledDiv, StyledFormDiv, StyledBox } from './Styled';
+import { useNavigate } from 'react-router-dom';
 import {
   Typography,
   CardContent,
@@ -11,27 +12,32 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem,
-} from "@mui/material";
-import { register } from "../actions/userActions";
+  MenuItem
+} from '@mui/material';
+import { register } from '../actions/userActions';
 
 const SignupPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  console.log("formData", formData);
+  const registerData = useSelector((state) => state.userRegisterReducer.useInfo);
+  console.log('hello');
+  console.log('registerData', registerData);
+  console.log('formData', formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, role, password } = formData;
-    dispatch(register(name, email, role, password));
+    dispatch(register(name, email, password, role));
+    navigate('/home');
   };
 
   return (
@@ -41,7 +47,7 @@ const SignupPage = () => {
         <StyledDiv>
           <StyledCard>
             <CardContent>
-              <Typography variant="h4" sx={{ marginBottom: "10px" }}>
+              <Typography variant="h4" sx={{ marginBottom: '10px' }}>
                 Signup
               </Typography>
               <StyledFormDiv>
@@ -55,7 +61,7 @@ const SignupPage = () => {
                   />
                 </FormControl>
 
-                <FormControl sx={{ marginTop: "20px" }}>
+                <FormControl sx={{ marginTop: '20px' }}>
                   <TextField
                     required
                     id="outlined-required"
@@ -64,7 +70,7 @@ const SignupPage = () => {
                     onChange={handleChange}
                   />
                 </FormControl>
-                <FormControl sx={{ marginTop: "20px" }}>
+                <FormControl sx={{ marginTop: '20px' }}>
                   <TextField
                     required
                     id="outlined-required"
@@ -74,17 +80,14 @@ const SignupPage = () => {
                   />
                 </FormControl>
                 <StyledBox sx={{ minWidth: 120 }}>
-                  <FormControl sx={{ width: "100%" }} error>
-                    <InputLabel id="demo-simple-select-error-label">
-                      Role
-                    </InputLabel>
+                  <FormControl sx={{ width: '100%' }} error>
+                    <InputLabel id="demo-simple-select-error-label">Role</InputLabel>
                     <Select
                       labelId="demo-simple-select-error-label"
                       id="demo-simple-select-error"
                       label="Role"
                       name="role"
-                      onChange={handleChange}
-                    >
+                      onChange={handleChange}>
                       <MenuItem value={0}>User</MenuItem>
                       <MenuItem value={1}>Admin</MenuItem>
                     </Select>
@@ -96,10 +99,9 @@ const SignupPage = () => {
               <Button
                 size="small"
                 variant="contained"
-                sx={{ marginLeft: "10px" }}
-                onClick={handleSubmit}
-              >
-                Login
+                sx={{ marginLeft: '10px' }}
+                onClick={handleSubmit}>
+                Signup
               </Button>
             </CardActions>
           </StyledCard>

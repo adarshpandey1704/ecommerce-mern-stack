@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { Card, Box } from "@mui/material";
+import styled from '@emotion/styled';
+import { Card, Box } from '@mui/material';
 
 export const StyledCard = styled(Card)`
   width: 50%;
