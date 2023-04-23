@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { StyledCard, StyledDiv, StyledFormDiv, StyledBox } from './Styled';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -20,10 +20,7 @@ const SignupPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const registerData = useSelector((state) => state.userRegisterReducer.useInfo);
-  console.log('hello');
-  console.log('registerData', registerData);
-  console.log('formData', formData);
+  console.log('formDatainsignup', formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +34,7 @@ const SignupPage = () => {
     e.preventDefault();
     const { name, email, role, password } = formData;
     dispatch(register(name, email, password, role));
-    navigate('/home');
+    navigate('/');
   };
 
   return (

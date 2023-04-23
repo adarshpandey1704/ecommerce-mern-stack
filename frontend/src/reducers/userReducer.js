@@ -4,11 +4,11 @@ import {
   USER_REGISTER_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE
+  USER_LOGIN_FAILURE,
+  USER_LOGOUT
 } from '../constants/userContants';
 
 export const userRegisterReducer = (state = {}, action) => {
-  console.log('action', action.payload);
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
@@ -22,7 +22,6 @@ export const userRegisterReducer = (state = {}, action) => {
 };
 
 export const userLoginReducer = (state = {}, action) => {
-  console.log('action', action.payload);
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
@@ -30,6 +29,8 @@ export const userLoginReducer = (state = {}, action) => {
       return { loading: false, loginInfo: action.payload };
     case USER_LOGIN_FAILURE:
       return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
     default:
       return state;
   }

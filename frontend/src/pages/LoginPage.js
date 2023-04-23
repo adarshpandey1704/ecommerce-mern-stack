@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Typography,
@@ -14,9 +15,19 @@ import { login } from '../actions/userActions';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const loginData = useSelector((state) => state.userLoginReducer.loginInfo);
-  console.log('loginData', loginData);
+
+  // when loginData is changed than this useEffect helps you to reder a component again
+
+  useEffect(() => {
+    if (loginData?.role === 0) {
+      navigate('/user-dashboard');
+    } else if (loginData?.role === 1) {
+      navigate('admin-dashboard');
+    }
+  }, [loginData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

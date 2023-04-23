@@ -1,15 +1,37 @@
 import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import HomePage from './pages/HomePage';
+import UserDashBoard from './pages/UserDashboard';
+import AdminDashBoard from './pages/AdminDashboard';
+import PrivateRoute from './auth/PrivateRoute';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/home" element={<HomePage />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        {/* public routes */}
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        {/* private routes */}
+        <Route
+          path="/user-dashboard"
+          element={
+            <PrivateRoute>
+              <UserDashBoard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <PrivateRoute>
+              <AdminDashBoard />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

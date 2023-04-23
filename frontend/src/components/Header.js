@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = (props) => {
-  console.log('props', props);
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>

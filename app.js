@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import initDB from './backend/config/db.js'
 import userRoutes from './backend/routes/userRoutes.js';
+import categoryRoutes from './backend/routes/categoryRoutes.js';
 
 const app = express();
 // CORS
@@ -22,6 +23,7 @@ app.get("/api", (req, res) => (
 ));
 
 app.use("/api/users/",userRoutes);
+app.use("/api/category/",categoryRoutes);
 
 app.use((err, req, res, next ) => {
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode

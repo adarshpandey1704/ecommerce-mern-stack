@@ -4,7 +4,7 @@ import generateToken from '../config/generateToken.js';
 const registerUser = async(req,res) => {
     try {
       console.log('requestBody', req.body);
-    const {name, email, password, about} = req.body;
+    const {name, email, password, about, role} = req.body;
     const userExists = await User.findOne({email});
     if(userExists) {
         res.status(400).json({
@@ -16,7 +16,8 @@ const registerUser = async(req,res) => {
         name: name, 
         email: email,
         password: password,
-        about: about
+        about: about,
+        role: role
     })
 
     console.log('user in backend controller', user);
@@ -25,7 +26,9 @@ const registerUser = async(req,res) => {
         res.status(201).json({
             _id: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            about: about,
+            role: role
         })
     }
     
@@ -44,6 +47,7 @@ const loginUser = async(req, res) => {
         res.status(200).json({
             _id: user._id,
             name: user.name,
+            email: user.email,
             about: user.about,
             role: user.role,
             token : generateToken(user._id)

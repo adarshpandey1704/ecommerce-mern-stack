@@ -19,3 +19,17 @@ export const StyledFormDiv = styled.div`
 export const StyledBox = styled(Box)`
   margin-top: 20px;
 `;
+
+export const UserLinkBox = styled(Box)`
+  border: 1px solid black;
+  background: cadetblue;
+  display: flex;
+  flex-direction: column;
+  .styledLink {
+    height: 25px;
+    padding: 5px;
+    color: white;
+    margin-left: 10px;
+    border-bottom: 1px solid white;
+  }
+`;
