@@ -33,3 +33,7 @@ export const UserLinkBox = styled(Box)`
     border-bottom: 1px solid white;
   }
 `;
+export const AdminDashboardWrapper = styled.div`
+  padding: 20px;
+  background-color: #ffe6e6;
+`;

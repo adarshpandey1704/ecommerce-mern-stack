@@ -1,6 +1,6 @@
 import Category from '../models/categoryModel.js';
 
-const categoryController = async(req, res) => {
+const createCategoryController = async(req, res) => {
     try {
         const categoryExists = await Category.findOne(req.body);
         if(categoryExists) {
@@ -24,4 +24,17 @@ const categoryController = async(req, res) => {
         console.log(error);
     }
 }
-export {categoryController };
+
+// getAllCategoriesApi
+
+const getAllCategories = async(req, res) => {
+    try {
+      const categories = await Category.find({});
+        return res.status(200).json(categories);
+    } catch(error) {
+        res.json({
+            result: error
+        })
+    }
+}
+export {createCategoryController, getAllCategories };
