@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -10,6 +10,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { FormControl, TextField, InputLabel, Select, MenuItem } from '@mui/material';
 import { StyledFormDiv } from './Styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../actions/userActions';
+import { useSnackbar } from 'notistack';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -52,6 +55,50 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ open, onClose }) {
+  const dispatch = useDispatch();
+  const registerData = useSelector((state) => state.userRegisterReducer);
+  console.log('registerData', registerData);
+  const { enqueueSnackbar } = useSnackbar();
+
+  // the data of userRegisterReducer has been changed than this useEffect hook should be trigered
+  useEffect(() => {
+    const { userInfo, error } = registerData;
+    console.log('userInfo', userInfo);
+    console.log('error', error);
+    if (userInfo) {
+      enqueueSnackbar('User is create successfully', {
+        variant: 'success'
+      });
+    }
+    if (error) {
+      enqueueSnackbar('Something went wrong', {
+        variant: 'error'
+      });
+    }
+  }, [registerData]);
+
+  const [formData, setFormData] = React.useState({
+    name: '',
+    enail: '',
+    password: '',
+    role: 0
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, role, password } = formData;
+    dispatch(register(name, email, password, role));
+    onClose();
+  };
+
   return (
     <div>
       <BootstrapDialog
@@ -68,7 +115,7 @@ export default function CustomizedDialogs({ open, onClose }) {
                 id="outlined-required"
                 label="Enter your Name"
                 name="name"
-                // onChange={handleChange}
+                onChange={handleChange}
               />
             </FormControl>
 
@@ -78,7 +125,7 @@ export default function CustomizedDialogs({ open, onClose }) {
                 id="outlined-required"
                 label="Enter your email"
                 name="email"
-                // onChange={handleChange}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl sx={{ marginTop: '20px' }}>
@@ -87,7 +134,7 @@ export default function CustomizedDialogs({ open, onClose }) {
                 id="outlined-required"
                 label="Enter your Password"
                 name="password"
-                // onChange={handleChange}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl sx={{ width: '100%' }} error>
@@ -97,8 +144,7 @@ export default function CustomizedDialogs({ open, onClose }) {
                 id="demo-simple-select-error"
                 label="Role"
                 name="role"
-                // onChange={handleChange}
-              >
+                onChange={handleChange}>
                 <MenuItem value={0}>User</MenuItem>
                 <MenuItem value={1}>Admin</MenuItem>
               </Select>
@@ -106,7 +152,7 @@ export default function CustomizedDialogs({ open, onClose }) {
           </StyledFormDiv>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={onClose}>
+          <Button autoFocus onClick={handleSubmit}>
             Save changes
           </Button>
         </DialogActions>

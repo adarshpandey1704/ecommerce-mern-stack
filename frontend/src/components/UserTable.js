@@ -31,23 +31,8 @@ const columns = [
   }
 ];
 
-function createData(name, email, about, role, createdAt) {
-  return { name, email, about, role, createdAt };
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263, '2023-04-02T16'),
-  createData('China', 'CN', 1403500365, 9596961, '2023-04-02T16'),
-  createData('Italy', 'IT', 60483973, 301340, '2023-04-02T16'),
-  createData('United States', 'US', 327167434, 9833520, '2023-04-02T16'),
-  createData('Canada', 'CA', 37602103, 9984670, '2023-04-02T16'),
-  createData('Australia', 'AU', 25475400, 7692024, '2023-04-02T16'),
-  createData('Germany', 'DE', 83019200, 357578, '2023-04-02T16'),
-  createData('Ireland', 'IE', 4857000, 70273, '2023-04-02T16'),
-  createData('Mexico', 'MX', 126577691, 1972550, '2023-04-02T16')
-];
-
-export default function StickyHeadTable() {
+export default function StickyHeadTable({ userListInfo }) {
+  console.log('userListInfoInchild', userListInfo);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -77,10 +62,12 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {/* {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
+                    console.log('column', column.id);
+                    console.log('value', row[column.id]);
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
@@ -90,14 +77,26 @@ export default function StickyHeadTable() {
                   })}
                 </TableRow>
               );
-            })}
+            })} */}
+            {userListInfo &&
+              userListInfo.map((item) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={item._id}>
+                    <TableCell align="center">{item.name}</TableCell>
+                    <TableCell align="center">{item.email}</TableCell>
+                    <TableCell align="right">{item.about}</TableCell>
+                    <TableCell align="right">{item.role}</TableCell>
+                    <TableCell align="center">{item.createdAt}</TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={userListInfo?.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

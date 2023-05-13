@@ -19,7 +19,12 @@ import { register } from '../actions/userActions';
 const SignupPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    name: '',
+    enail: '',
+    password: '',
+    role: 0
+  });
   console.log('formDatainsignup', formData);
 
   const handleChange = (e) => {

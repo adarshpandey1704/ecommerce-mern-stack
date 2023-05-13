@@ -6,7 +6,10 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
-  USER_LOGOUT
+  USER_LOGOUT,
+  ALL_USERS_DATA_REQUEST,
+  ALL_USERS_DATA_SUCCESS,
+  ALL_USERS_DATA_FAILURE
 } from '../constants/userContants';
 
 // action creators returns an action with the required payload.
@@ -83,4 +86,32 @@ export const logout = () => async (dispatch) => {
   dispatch({
     type: USER_LOGOUT
   });
+};
+
+//all users data
+
+export const allUsers = (token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ALL_USERS_DATA_REQUEST
+    });
+    console.log('token', token);
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    };
+    const { data } = await axios.get(`http://localhost:8000/api/users/getAllUsers`, config);
+    dispatch({
+      type: ALL_USERS_DATA_SUCCESS,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_USERS_DATA_FAILURE,
+      payload: error
+    });
+  }
 };

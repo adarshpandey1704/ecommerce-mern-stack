@@ -17,7 +17,9 @@ export const ListStyled = styled(List)`
 
 export const StyledTypography = styled(Typography)`
   color: white;
-  font-size: 25px;
+  font-size: 20px;
+  margin-left: 20px;
+  cursor: pointer;
 `;
 export const StyledListItem = styled(ListItem)`
   border-bottom: 1px solid white;

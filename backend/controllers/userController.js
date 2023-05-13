@@ -33,7 +33,9 @@ const registerUser = async(req,res) => {
     }
     
     } catch(error) {
-      console.log('error', error);
+      res.status(500).json({
+        error: error
+      })
     }
 };
 
@@ -62,4 +64,17 @@ const loginUser = async(req, res) => {
     }
 }
 
-export {registerUser, loginUser};
+//get all users
+
+const getAllUsers = async(req, res) => {
+    try {
+      const Users = await User.find({});
+        return res.status(200).json(Users);
+    } catch(error) {
+        res.json({
+            result: error
+        })
+    }
+}
+
+export {registerUser, loginUser, getAllUsers};
