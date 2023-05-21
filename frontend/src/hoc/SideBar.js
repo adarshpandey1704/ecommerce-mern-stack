@@ -5,11 +5,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import CategoryIcon from '@mui/icons-material/Category';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useNavigate } from 'react-router-dom';
 
 const SideBar = () => {
-  const navigate = useNavigate();
-
   return (
     <StyledSideDiv>
       <Box height="100%" display="flex" flexDirection="column">
@@ -22,16 +19,13 @@ const SideBar = () => {
             </StyledListItem>
             <StyledListItem>
               <PersonIcon sx={{ color: 'white' }} />
-              <StyledTypography
-                variant="h5"
-                cursor="pointer"
-                onClick={navigate('/admin-dashboard')}>
+              <StyledTypography variant="h5" cursor="pointer">
                 Users
               </StyledTypography>
             </StyledListItem>
             <StyledListItem>
               <CategoryIcon sx={{ color: 'white' }} />
-              <StyledTypography cursor="pointer" variant="h5" onClick={navigate('/admin-category')}>
+              <StyledTypography cursor="pointer" variant="h5">
                 Category
               </StyledTypography>
             </StyledListItem>

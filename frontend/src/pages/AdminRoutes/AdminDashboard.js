@@ -3,8 +3,8 @@ import AdminLayout from '../../hoc/AdminLayout';
 import { AdminDashboardWrapper } from '../Styled';
 import { Grid, Typography, TextField, Button } from '@mui/material';
 import Select from '../../components/Select';
-import UserTable from '../../components/UserTable';
-import DialogBox from '../../components/DialogBox';
+import UserTable from '../../components/Tables/UserTable';
+import DialogBox from '../../components/Dialogbox/DialogBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { allUsers } from '../../actions/userActions';
 

@@ -7,17 +7,21 @@ import User from '../models/userModel.js'
 // Creating a prodcut api
 
 const createProductController = async(req, res) => {
+    console.log('reqbodyinproduct', req.body);
     try {
       let form = new formidable.IncomingForm();
       form.keepExtensions = true;
       form.parse(req, (err, fields, files) => {
+        console.log('req', req);
         if(err) {
             return res.status(400).json({
                 error: 'Image could not be uploaded'
             })
         }
         let product = new Product(fields);
+        console.log('product=>', product);
         if(files.photo) {
+            console.log('file.photo', file.photo);
             if(files.photo.size > 1000000) {
                 return res.status(400).json({
                     error: "Image should less tham 1 Mb"
@@ -45,6 +49,7 @@ const createProductController = async(req, res) => {
 
 const getProducts = async(req, res) => {
     try {
+        let data = [];
       const products = await Product.find({}).select(['-photo']);
       console.log('product', products);
         return res.status(200).json(products);

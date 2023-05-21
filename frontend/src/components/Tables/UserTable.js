@@ -62,22 +62,6 @@ export default function StickyHeadTable({ userListInfo }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    console.log('column', column.id);
-                    console.log('value', row[column.id]);
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })} */}
             {userListInfo &&
               userListInfo.map((item) => {
                 return (

@@ -5,6 +5,7 @@ import { isAuthenticated } from './index';
 // It is Higher order component in react
 
 const PrivateRoute = ({ children }) => {
+  console.log('clidren', children);
   return isAuthenticated() ? <>{children}</> : <Navigate to="/" state={{ from: location }} />;
 };
 

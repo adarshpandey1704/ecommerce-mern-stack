@@ -9,9 +9,9 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { FormControl, TextField, InputLabel, Select, MenuItem } from '@mui/material';
-import { StyledFormDiv } from './Styled';
+import { StyledFormDiv } from '../Styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../actions/userActions';
+import { register } from '../../actions/userActions';
 import { useSnackbar } from 'notistack';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

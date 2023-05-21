@@ -4,6 +4,7 @@ import SignupPage from './pages/SignupPage';
 import UserDashBoard from './pages/UserDashboard';
 import AdminDashBoard from './pages/AdminRoutes/AdminDashboard';
 import AdminCategory from './pages/AdminRoutes/AdminCategory';
+import ProductDashboard from './pages/AdminRoutes/ProductDahboard';
 import PrivateRoute from './auth/PrivateRoute';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -25,7 +26,6 @@ function App() {
         />
         {/* admin routes */}
         <Route
-          exact
           path="/admin-dashboard"
           element={
             <PrivateRoute>
@@ -34,11 +34,18 @@ function App() {
           }
         />
         <Route
-          exact
-          path="/admin-category"
+          path="/category"
           element={
             <PrivateRoute>
               <AdminCategory />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/product-dashboard"
+          element={
+            <PrivateRoute>
+              <ProductDashboard />
             </PrivateRoute>
           }
         />
