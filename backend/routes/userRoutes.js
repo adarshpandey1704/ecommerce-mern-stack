@@ -7,6 +7,6 @@ router.route("/register").post(registerUser);
 
 router.route('/login').post(loginUser);
 
-router.get('/getAllUsers', protect, getAllUsers);
+router.get(`/getAllUsers`, protect, getAllUsers);
 
 export default router;

@@ -10,15 +10,21 @@ import { allUsers } from '../../actions/userActions';
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
+  const [selectData, setSelectData] = React.useState('');
+  console.log('selectData', selectData);
   const loginData = useSelector((state) => state.userLoginReducer.loginInfo);
   const registerData = useSelector((state) => state.userRegisterReducer);
   const userListInfo = useSelector((state) => state.userListReducer.userListInfo);
-  console.log('userListReducer', userListInfo);
-  console.log('logindATA', loginData);
   const [open, setOpen] = useState(false);
-  console.log('open', open);
+
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  //handling select data
+
+  const handleSelectChange = (event) => {
+    setSelectData(event.target.value);
   };
 
   const handleClose = () => {
@@ -34,6 +40,10 @@ const AdminDashboard = () => {
     dispatch(allUsers(loginData?.token));
   }, [registerData]);
 
+  useEffect(() => {
+    dispatch(allUsers(loginData?.token, selectData));
+  }, [selectData]);
+
   return (
     <AdminLayout>
       <AdminDashboardWrapper>
@@ -45,7 +55,7 @@ const AdminDashboard = () => {
             <TextField id="outlined-basic" label="Search User" variant="outlined" />
           </Grid>
           <Grid item xs={12} sm={5} mt={3} mr={3}>
-            <Select />
+            <Select handleSelectChange={handleSelectChange} selectData={selectData} />
           </Grid>
           <Grid item xs={12} sm={5} mt={4} mr={1}>
             <Button variant="contained" fullWidth onClick={handleClickOpen}>

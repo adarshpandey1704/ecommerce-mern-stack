@@ -68,8 +68,18 @@ const loginUser = async(req, res) => {
 
 const getAllUsers = async(req, res) => {
     try {
-      const Users = await User.find({});
-        return res.status(200).json(Users);
+        console.log('param1', req.query.role);
+        const query = {};
+        //check the specific query parameter
+        if(req.query.param1) {
+            query = req.query.role;
+        }
+        console.log('query1', query);
+      const filteredUsers = await User.find({role : req.query.role});
+      console.log('filteredUsers', filteredUsers);
+      if(filteredUsers) {
+        return res.status(200).json(filteredUsers);
+      }
     } catch(error) {
         res.json({
             result: error

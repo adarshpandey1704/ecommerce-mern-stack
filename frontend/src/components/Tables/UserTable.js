@@ -31,10 +31,22 @@ const columns = [
   }
 ];
 
+// temporory data
+
+const data = [
+  {
+    name: 'adarsh',
+    email: 'adarsh@gmail.com',
+    about: 'bdcjbvfejvbev',
+    role: 0,
+    createdAt: '212323'
+  }
+];
+
 export default function StickyHeadTable({ userListInfo }) {
-  console.log('userListInfoInchild', userListInfo);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  console.log('userListInfo', userListInfo);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -62,18 +74,29 @@ export default function StickyHeadTable({ userListInfo }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userListInfo &&
-              userListInfo.map((item) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={item._id}>
-                    <TableCell align="center">{item.name}</TableCell>
-                    <TableCell align="center">{item.email}</TableCell>
-                    <TableCell align="right">{item.about}</TableCell>
-                    <TableCell align="right">{item.role}</TableCell>
-                    <TableCell align="center">{item.createdAt}</TableCell>
-                  </TableRow>
-                );
-              })}
+            {userListInfo
+              ? userListInfo?.map((item, index) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      <TableCell align="center">{item?.name}</TableCell>
+                      <TableCell align="center">{item?.email}</TableCell>
+                      <TableCell align="right">{item?.about}</TableCell>
+                      <TableCell align="right">{item?.role}</TableCell>
+                      <TableCell align="center">{item?.createdAt}</TableCell>
+                    </TableRow>
+                  );
+                })
+              : data?.map((item, index) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      <TableCell align="center">{item?.name}</TableCell>
+                      <TableCell align="center">{item?.email}</TableCell>
+                      <TableCell align="right">{item?.about}</TableCell>
+                      <TableCell align="right">{item?.role}</TableCell>
+                      <TableCell align="center">{item?.createdAt}</TableCell>
+                    </TableRow>
+                  );
+                })}
           </TableBody>
         </Table>
       </TableContainer>

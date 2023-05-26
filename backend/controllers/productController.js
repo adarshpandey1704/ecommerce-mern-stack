@@ -12,7 +12,8 @@ const createProductController = async(req, res) => {
       let form = new formidable.IncomingForm();
       form.keepExtensions = true;
       form.parse(req, (err, fields, files) => {
-        console.log('req', req);
+        console.log('fields', fields);
+        console.log('files', files);
         if(err) {
             return res.status(400).json({
                 error: 'Image could not be uploaded'
@@ -21,7 +22,6 @@ const createProductController = async(req, res) => {
         let product = new Product(fields);
         console.log('product=>', product);
         if(files.photo) {
-            console.log('file.photo', file.photo);
             if(files.photo.size > 1000000) {
                 return res.status(400).json({
                     error: "Image should less tham 1 Mb"
@@ -29,6 +29,7 @@ const createProductController = async(req, res) => {
             }
            product.photo.data = fs.readFileSync(files.photo.filepath);
            product.photo.contentType = files.photo.mimetype;
+           console.log('saved');
         }
         product.save();
         if(product) {
@@ -50,7 +51,7 @@ const createProductController = async(req, res) => {
 const getProducts = async(req, res) => {
     try {
         let data = [];
-      const products = await Product.find({}).select(['-photo']);
+      const products = await Product.find({}).select(['-photo']).populate('category');
       console.log('product', products);
         return res.status(200).json(products);
     } catch(error) {

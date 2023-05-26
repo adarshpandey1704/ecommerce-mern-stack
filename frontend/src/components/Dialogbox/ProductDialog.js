@@ -13,7 +13,7 @@ import { StyledFormDiv } from '../Styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveProduct } from '../../actions/productActions';
 import { allCategories } from '../../actions/categoryActions';
-// import { useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -56,26 +56,25 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ open, onClose }) {
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.userLoginReducer.loginInfo);
   const categoryList = useSelector((state) => state.categoryReducer.categoryList);
+  const saveProductDatas = useSelector((state) => state.SaveProductReducer);
 
-  // the data of userRegisterReducer has been changed than this useEffect hook should be trigered
-  //   useEffect(() => {
-  //     const { userInfo, error } = registerData;
-  //     console.log('userInfo', userInfo);
-  //     console.log('error', error);
-  //     if (userInfo) {
-  //       enqueueSnackbar('User is create successfully', {
-  //         variant: 'success'
-  //       });
-  //     }
-  //     if (error) {
-  //       enqueueSnackbar('Something went wrong', {
-  //         variant: 'error'
-  //       });
-  //     }
-  //   }, [registerData]);
+  useEffect(() => {
+    const { saveProductData, error } = saveProductDatas;
+    if (saveProductData) {
+      enqueueSnackbar('Product is created successfully', {
+        variant: 'success'
+      });
+    }
+    if (error) {
+      enqueueSnackbar('Something went wrong', {
+        variant: 'error'
+      });
+    }
+  }, [saveProductDatas]);
 
   const [formData, setFormData] = React.useState({
     name: '',
@@ -88,7 +87,8 @@ export default function CustomizedDialogs({ open, onClose }) {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    const value = name === 'photo' ? e.target.files[0] : e.target.value;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value
@@ -100,19 +100,15 @@ export default function CustomizedDialogs({ open, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, description, price, quantity, photo, category, shipping } = formData;
-    dispatch(
-      saveProduct(
-        name,
-        description,
-        price,
-        quantity,
-        photo,
-        category,
-        shipping,
-        loginData.token,
-        loginData._id
-      )
-    );
+    const productFormData = new FormData();
+    productFormData.set('name', name);
+    productFormData.set('description', description);
+    productFormData.set('price', price);
+    productFormData.set('quantity', quantity);
+    productFormData.set('photo', photo);
+    productFormData.set('category', category);
+    productFormData.set('shipping', shipping);
+    dispatch(saveProduct(productFormData, loginData.token, loginData._id));
     onClose();
   };
 

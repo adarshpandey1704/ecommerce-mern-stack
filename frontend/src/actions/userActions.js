@@ -90,7 +90,7 @@ export const logout = () => async (dispatch) => {
 
 //all users data
 
-export const allUsers = (token) => async (dispatch) => {
+export const allUsers = (token, selectData) => async (dispatch) => {
   try {
     dispatch({
       type: ALL_USERS_DATA_REQUEST
@@ -103,7 +103,10 @@ export const allUsers = (token) => async (dispatch) => {
         Authorization: `Bearer ${token}`
       }
     };
-    const { data } = await axios.get(`http://localhost:8000/api/users/getAllUsers`, config);
+    const { data } = await axios.get(
+      `http://localhost:8000/api/users/getAllUsers?role=${selectData}`,
+      config
+    );
     dispatch({
       type: ALL_USERS_DATA_SUCCESS,
       payload: data

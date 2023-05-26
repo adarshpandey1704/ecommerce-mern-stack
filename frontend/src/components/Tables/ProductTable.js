@@ -69,7 +69,7 @@ export default function StickyHeadTable({ productList }) {
                     <TableCell align="left">{item.name}</TableCell>
                     <TableCell align="left">{item.description}</TableCell>
                     <TableCell align="right">{item.price}</TableCell>
-                    <TableCell align="right">{item.category}</TableCell>
+                    <TableCell align="right">{item.category.name}</TableCell>
                     <TableCell align="right">{item.quantity}</TableCell>
                   </TableRow>
                 );

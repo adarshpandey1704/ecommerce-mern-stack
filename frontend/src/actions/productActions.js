@@ -36,35 +36,33 @@ export const allProducts = (token) => async (dispatch) => {
 
 // ADDING THE PRODCUT ACTION CREATOR
 
-export const saveProduct =
-  (name, description, price, quantity, photo, category, shipping, token, userId) =>
-  async (dispatch) => {
-    try {
-      dispatch({
-        type: ADD_PRODUCT_REQUEST_STARTED
-      });
-      const config = {
-        headers: {
-          Accept: 'application/json',
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      };
-      const { data } = await axios.post(
-        `http://localhost:8000/api/product/create-product/${userId}`,
-        { name, description, price, quantity, photo, category, shipping },
-        config
-      );
+export const saveProduct = (productFormData, token, userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADD_PRODUCT_REQUEST_STARTED
+    });
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        ContentType: 'multipart/form-data',
+        Authorization: `Bearer ${token}`
+      }
+    };
+    const { data } = await axios.post(
+      `http://localhost:8000/api/product/create-product/${userId}`,
+      productFormData,
+      config
+    );
 
-      dispatch({
-        type: ADD_PRODUCT_REQUEST_SUCCESS,
-        payload: data
-      });
-    } catch (error) {
-      dispatch({
-        type: ADD_PRODUCT_REQUEST_FAILURE,
-        payload: error
-      });
-      console.log('error', error);
-    }
-  };
+    dispatch({
+      type: ADD_PRODUCT_REQUEST_SUCCESS,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_PRODUCT_REQUEST_FAILURE,
+      payload: error
+    });
+    console.log('error', error);
+  }
+};
