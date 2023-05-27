@@ -90,7 +90,7 @@ export const logout = () => async (dispatch) => {
 
 //all users data
 
-export const allUsers = (token, selectData) => async (dispatch) => {
+export const allUsers = (token, selectData, searchData) => async (dispatch) => {
   try {
     dispatch({
       type: ALL_USERS_DATA_REQUEST
@@ -103,14 +103,23 @@ export const allUsers = (token, selectData) => async (dispatch) => {
         Authorization: `Bearer ${token}`
       }
     };
-    const { data } = await axios.get(
-      `http://localhost:8000/api/users/getAllUsers?role=${selectData}`,
-      config
-    );
-    dispatch({
-      type: ALL_USERS_DATA_SUCCESS,
-      payload: data
-    });
+    if (selectData >= 0 || searchData) {
+      console.log('hellooo=>');
+      const { data } = await axios.get(
+        `http://localhost:8000/api/users/getAllUsers/?role=${selectData}&name=${searchData}`,
+        config
+      );
+      dispatch({
+        type: ALL_USERS_DATA_SUCCESS,
+        payload: data
+      });
+    } else {
+      const { data } = await axios.get(`http://localhost:8000/api/users/getAllUsers`, config);
+      dispatch({
+        type: ALL_USERS_DATA_SUCCESS,
+        payload: data
+      });
+    }
   } catch (error) {
     dispatch({
       type: ALL_USERS_DATA_FAILURE,

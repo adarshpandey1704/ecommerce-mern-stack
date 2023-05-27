@@ -68,18 +68,15 @@ const loginUser = async(req, res) => {
 
 const getAllUsers = async(req, res) => {
     try {
-        console.log('param1', req.query.role);
-        const query = {};
-        //check the specific query parameter
-        if(req.query.param1) {
-            query = req.query.role;
+        let match = {};
+        if(req.query.role) {
+            match.role = parseInt(req.query.role)
+        };
+        if(req.query.name) {
+          match.name = req.query.name
         }
-        console.log('query1', query);
-      const filteredUsers = await User.find({role : req.query.role});
-      console.log('filteredUsers', filteredUsers);
-      if(filteredUsers) {
-        return res.status(200).json(filteredUsers);
-      }
+      const Users = await User.aggregate([ { $match : match }]);
+        return res.status(200).json(Users);
     } catch(error) {
         res.json({
             result: error

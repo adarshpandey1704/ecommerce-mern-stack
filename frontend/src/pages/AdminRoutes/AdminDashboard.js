@@ -11,12 +11,12 @@ import { allUsers } from '../../actions/userActions';
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const [selectData, setSelectData] = React.useState('');
-  console.log('selectData', selectData);
   const loginData = useSelector((state) => state.userLoginReducer.loginInfo);
   const registerData = useSelector((state) => state.userRegisterReducer);
   const userListInfo = useSelector((state) => state.userListReducer.userListInfo);
   const [open, setOpen] = useState(false);
-
+  const [searchData, setSearchData] = useState('');
+  console.log('searchDasta', searchData);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -41,8 +41,13 @@ const AdminDashboard = () => {
   }, [registerData]);
 
   useEffect(() => {
-    dispatch(allUsers(loginData?.token, selectData));
-  }, [selectData]);
+    dispatch(allUsers(loginData?.token, selectData, searchData));
+  }, [selectData, searchData]);
+
+  // searching the data
+  const handleSearch = (e) => {
+    setSearchData(e.target.value);
+  };
 
   return (
     <AdminLayout>
@@ -52,7 +57,12 @@ const AdminDashboard = () => {
             <Typography variant="h3">Users</Typography>
           </Grid>
           <Grid item xs={12} sm={6} sx={{ justifyContent: 'flex-end', display: 'flex' }}>
-            <TextField id="outlined-basic" label="Search User" variant="outlined" />
+            <TextField
+              onChange={handleSearch}
+              id="outlined-basic"
+              label="Search User"
+              variant="outlined"
+            />
           </Grid>
           <Grid item xs={12} sm={5} mt={3} mr={3}>
             <Select handleSelectChange={handleSelectChange} selectData={selectData} />

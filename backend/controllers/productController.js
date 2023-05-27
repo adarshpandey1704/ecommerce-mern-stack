@@ -51,7 +51,7 @@ const createProductController = async(req, res) => {
 const getProducts = async(req, res) => {
     try {
         let data = [];
-      const products = await Product.find({}).select(['-photo']).populate('category');
+      const products = await Product.find({}).populate('category');
       console.log('product', products);
         return res.status(200).json(products);
     } catch(error) {
