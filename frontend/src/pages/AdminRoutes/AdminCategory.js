@@ -10,7 +10,6 @@ import CategoryTable from '../../components/Tables/CategoryTable';
 const AdminCategory = () => {
   const dispatch = useDispatch();
   const [categoryData, setCategoryData] = useState([]);
-  console.log('categoryData', categoryData);
   const loginData = useSelector((state) => state.userLoginReducer.loginInfo);
   const categoryDataReducer = useSelector((state) => state.categoryReducer.categoryList);
 

@@ -72,9 +72,6 @@ const getAllUsers = async(req, res) => {
         if(req.query.role) {
             match.role = parseInt(req.query.role)
         };
-        if(req.query.name) {
-          match.name = req.query.name
-        }
       const Users = await User.aggregate([ { $match : match }]);
         return res.status(200).json(Users);
     } catch(error) {

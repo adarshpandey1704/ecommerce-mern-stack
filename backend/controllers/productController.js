@@ -132,4 +132,22 @@ const updateProductById = async(req, res) => {
    }
 }
 
-export {createProductController, getProducts, getProductById, updateProductById};
+const getProductPhoto = async(req, res) => {
+    try{
+        const product = await Product.findById(req.params.productId);
+        if(!product) {
+          return res.status(404)
+        } else {
+         if(product.photo.data) {
+            res.set('Content-Type', product.photo.contentType);
+            return res.send(product.photo.data);
+         }
+        }
+      } catch(error) {
+          return res.json({
+              result: error
+          })
+      }
+}
+
+export {createProductController, getProducts, getProductById, updateProductById, getProductPhoto};

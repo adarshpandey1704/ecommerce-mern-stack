@@ -6,6 +6,7 @@ import AdminDashBoard from './pages/AdminRoutes/AdminDashboard';
 import AdminCategory from './pages/AdminRoutes/AdminCategory';
 import ProductDashboard from './pages/AdminRoutes/ProductDahboard';
 import GuestDashboard from './pages/GuestDashboard';
+import ProductDetails from './pages/ProductDetails';
 import PrivateRoute from './auth/PrivateRoute';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="guest-dashboard" element={<GuestDashboard />} />
+        <Route path="product-details/:product_id" element={<ProductDetails />} />
         {/* private routes */}
         <Route
           path="/user-dashboard"

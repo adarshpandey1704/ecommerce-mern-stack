@@ -37,3 +37,10 @@ export const AdminDashboardWrapper = styled.div`
   padding: 20px;
   background-color: #ffe6e6;
 `;
+
+export const StyledDivCard = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
