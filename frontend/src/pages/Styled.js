@@ -44,3 +44,13 @@ export const StyledDivCard = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 `;
+
+export const StyledImage = styled.img`
+  width: 100%;
+  height: 400px;
+`;
+
+export const StyledImgBox = styled(Box)`
+  width: 80%;
+  margin-top: 10px;
+`;

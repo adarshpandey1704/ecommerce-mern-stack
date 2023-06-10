@@ -7,8 +7,12 @@ import AdminCategory from './pages/AdminRoutes/AdminCategory';
 import ProductDashboard from './pages/AdminRoutes/ProductDahboard';
 import GuestDashboard from './pages/GuestDashboard';
 import ProductDetails from './pages/ProductDetails';
+import AddToCart from './pages/AddToCart';
 import PrivateRoute from './auth/PrivateRoute';
 import { BrowserRouter } from 'react-router-dom';
+
+// redux thunk to handle our apis and it updates the correponding reducers on the basis of what you have dispatched
+// which is not comming from backend server.
 
 function App() {
   return (
@@ -50,6 +54,14 @@ function App() {
           element={
             <PrivateRoute>
               <ProductDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cart/:id"
+          element={
+            <PrivateRoute>
+              <AddToCart />
             </PrivateRoute>
           }
         />

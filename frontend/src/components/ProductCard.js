@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 
 export default function MediaCard({ item }) {
   const navigate = useNavigate();
-  const handlePush = (id) => {
-    navigate(`/product-details/${id}`);
+  const handlePush = (item) => {
+    navigate(`/product-details/${item._id}`, { state: { item } });
   };
   return (
     <Card sx={{ maxWidth: 345, marginTop: '10px', borderRadius: '10px' }}>
@@ -28,7 +28,7 @@ export default function MediaCard({ item }) {
       </CardContent>
       <CardActions sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <Typography size="midium">Rs {item.price}</Typography>
-        <PreviewIcon onClick={() => handlePush(item._id)} />
+        <PreviewIcon onClick={() => handlePush(item)} />
       </CardActions>
     </Card>
   );

@@ -46,7 +46,7 @@ const GuestDashboard = () => {
                 productList.map((item, index) => {
                   return (
                     <Grid item sm={12} md={4} key={index}>
-                      <ProductCard sx={{ margin: '2px', marginTop: '10px' }} item={item} />
+                      <ProductCard sx={{ margin: '2px' }} item={item} />
                     </Grid>
                   );
                 })}
