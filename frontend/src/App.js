@@ -58,7 +58,7 @@ function App() {
           }
         />
         <Route
-          path="/cart/:id"
+          path="/cart/:id/:quantity"
           element={
             <PrivateRoute>
               <AddToCart />

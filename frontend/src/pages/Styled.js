@@ -47,10 +47,25 @@ export const StyledDivCard = styled.div`
 
 export const StyledImage = styled.img`
   width: 100%;
-  height: 400px;
+  height: ${(props) => (props.height ? props.height : '400px')};
 `;
 
 export const StyledImgBox = styled(Box)`
   width: 80%;
   margin-top: 10px;
+`;
+
+export const CartBox = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+`;
+
+export const StyledDivCart = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  margin: 5px;
+  padding: 10px;
 `;

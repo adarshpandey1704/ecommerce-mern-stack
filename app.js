@@ -6,6 +6,7 @@ import initDB from './backend/config/db.js'
 import userRoutes from './backend/routes/userRoutes.js';
 import categoryRoutes from './backend/routes/categoryRoutes.js';
 import productRoutes from './backend/routes/productRoutes.js';
+import shippingRoutes from './backend/routes/shippingRoutes.js';
 
 const app = express();
 // CORS
@@ -26,6 +27,7 @@ app.get("/api", (req, res) => (
 app.use("/api/users/",userRoutes);
 app.use("/api/category/",categoryRoutes);
 app.use("/api/product/" , productRoutes);
+app.use("/api/shipping". shippingRoutes);
 
 app.use((err, req, res, next ) => {
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode
