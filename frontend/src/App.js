@@ -8,6 +8,7 @@ import ProductDashboard from './pages/AdminRoutes/ProductDahboard';
 import GuestDashboard from './pages/GuestDashboard';
 import ProductDetails from './pages/ProductDetails';
 import AddToCart from './pages/AddToCart';
+import ShippingDetails from './pages/ShippingDetails';
 import PrivateRoute from './auth/PrivateRoute';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -62,6 +63,14 @@ function App() {
           element={
             <PrivateRoute>
               <AddToCart />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="shipping-details/:userid"
+          element={
+            <PrivateRoute>
+              <ShippingDetails />
             </PrivateRoute>
           }
         />

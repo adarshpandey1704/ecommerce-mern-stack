@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import { ADD_TO_CART } from '../constants/addToCartContants';
+import { ADD_TO_CART } from '../constants/CartContants';
 import axios from 'axios';
-// import { cartReducer } from '../reducers/cartReducer';
+import store from '../store';
 
-const UserAddToCart = (productId, productQuantity) => async (dispatch) => {
+export const UserAddToCart = (productId, productQuantity) => async (dispatch) => {
   const { data } = await axios.get(`http://localhost:8000/api/product/${productId}`);
   console.log('productQuantityinAddTocart', productQuantity);
   dispatch({
@@ -18,7 +18,9 @@ const UserAddToCart = (productId, productQuantity) => async (dispatch) => {
       shipping: data.shipping
     }
   });
-  // localStorage.setItem('cartItems', JSON.stringify(cartReducer.cartItems));
+  const a = localStorage.setItem(
+    'cartItems',
+    JSON.stringify(store.getState().cartReducer.cartItems)
+  );
+  console.log('actionlocal', a);
 };
-
-export default UserAddToCart;

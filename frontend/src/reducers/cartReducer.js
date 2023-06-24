@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { ADD_TO_CART } from '../constants/addToCartContants';
+import { ADD_TO_CART } from '../constants/CartContants';
 
 export const cartReducer = (state = { cartItems: [] }, action) => {
   switch (action.type) {

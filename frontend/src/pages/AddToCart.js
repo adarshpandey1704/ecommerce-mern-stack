@@ -8,21 +8,24 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, Button } from '@mui/material';
 import { StyledImage } from './Styled';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import UserAddToCart from '../actions/addToCart';
+import { UserAddToCart } from '../actions/addToCart';
 
 const AddToCart = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const productId = params.id;
   const productQuantity = params.quantity;
   const [cartList, setCartList] = useState([]);
-  console.log('cartList', cartList);
 
   const productCartItems = useSelector((state) => state.cartReducer.cartItems);
+  const userData = useSelector((state) => state.userLoginReducer.loginInfo);
+
+  // const productCartItems = JSON.parse(localStorage.getItem('cartItems'));
 
   useEffect(() => {
     if (productId && productQuantity) {
@@ -31,6 +34,7 @@ const AddToCart = () => {
   }, [productId, productQuantity]);
 
   useEffect(() => {
+    console.log('heeloooooooooo');
     setCartList(productCartItems);
   }, [productCartItems]);
   const columns = [
@@ -79,6 +83,29 @@ const AddToCart = () => {
     }, 0);
   };
 
+  const handleRemove = (item) => {
+    removeItem(item.id);
+  };
+
+  const removeItem = (productId) => {
+    let cart = [];
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cartItems')) {
+        cart = JSON.parse(localStorage.getItem('cartItems'));
+      }
+      cart.map((item, index) => {
+        if (item.id === productId) {
+          cart.splice(cart[index], 1);
+        }
+      });
+      localStorage.setItem('cartItems', JSON.stringify(cart));
+    }
+  };
+
+  const handlePush = () => {
+    navigate(`/shipping-details/${userData._id}`);
+  };
+
   return (
     <Grid container>
       <Grid item sx={12} md={9}>
@@ -101,7 +128,6 @@ const AddToCart = () => {
               <TableBody>
                 {cartList &&
                   cartList.map((item) => {
-                    console.log('item', item);
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={item._id}>
                         <TableCell align="left">
@@ -116,7 +142,10 @@ const AddToCart = () => {
                         {/* <TableCell align="right">{item.category.name}</TableCell> */}
                         <TableCell align="right">{item.quantity}</TableCell>
                         <TableCell>
-                          <DeleteIcon sx={{ cursor: 'pointer' }} />
+                          <DeleteIcon
+                            onClick={() => handleRemove(item)}
+                            sx={{ cursor: 'pointer' }}
+                          />
                         </TableCell>
                       </TableRow>
                     );
@@ -128,6 +157,9 @@ const AddToCart = () => {
       </Grid>
       <Grid sx={{ marginTop: '10px' }} item md={3}>
         <Typography variant="h5">Total Amount: Rs{GetCartAmount()}</Typography>
+        <Button sx={{ margin: '20px' }} onClick={handlePush} variant="contained">
+          Add your Shipping details
+        </Button>
       </Grid>
     </Grid>
   );

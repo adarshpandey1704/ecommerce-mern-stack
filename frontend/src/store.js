@@ -9,6 +9,7 @@ import {
   SingleProductDetails
 } from './reducers/productReducer';
 import { cartReducer } from './reducers/cartReducer';
+import { shippingDetailsReducer } from './reducers/shippingReducer';
 
 const reducer = combineReducers({
   userRegisterReducer: userRegisterReducer,
@@ -18,22 +19,23 @@ const reducer = combineReducers({
   productReducer: productReducer,
   SaveProductReducer: SaveProductReducer,
   SingleProductDetails: SingleProductDetails,
-  cartReducer: cartReducer
+  cartReducer: cartReducer,
+  shippingDetailsReducer: shippingDetailsReducer
 });
 
 const dataFromLocalStorage = localStorage.getItem('loginInfo')
   ? JSON.parse(localStorage.getItem('loginInfo'))
   : null;
 
-// const cartItemFromStorage = localStorage.getItem('cartItems')
-//   ? JSON.parse(localStorage.getItem('cartItems'))
-//   : [];
+const cartItemFromStorage = localStorage.getItem('cartItems')
+  ? JSON.parse(localStorage.getItem('cartItems'))
+  : [];
 
 const initialState = {
   userLoginReducer: {
     loginInfo: dataFromLocalStorage
-  }
-  // cartReducer: { cartItems: cartItemFromStorage }
+  },
+  cartReducer: { cartItems: cartItemFromStorage }
 };
 
 console.log('initialState', initialState);
