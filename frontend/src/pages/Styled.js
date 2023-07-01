@@ -69,3 +69,12 @@ export const StyledDivCart = styled.div`
   margin: 5px;
   padding: 10px;
 `;
+
+export const StyledShippingBox = styled(Box)`
+  background-color: #fee;
+  border-radius: 2px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+`;

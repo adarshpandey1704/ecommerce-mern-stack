@@ -13,6 +13,7 @@ import { StyledImage } from './Styled';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserAddToCart } from '../actions/addToCart';
+import { generateBraintreeClientToken } from '../apis';
 
 const AddToCart = () => {
   const params = useParams();
@@ -26,6 +27,10 @@ const AddToCart = () => {
   const userData = useSelector((state) => state.userLoginReducer.loginInfo);
 
   // const productCartItems = JSON.parse(localStorage.getItem('cartItems'));
+
+  useEffect(() => {
+    generateBraintreeClientToken(userData._id, userData.token);
+  }, [userData]);
 
   useEffect(() => {
     if (productId && productQuantity) {

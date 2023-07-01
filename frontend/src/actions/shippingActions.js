@@ -1,7 +1,10 @@
 import {
   SHIPPING_DETAILS_STARTED,
   SHIPPING_DETAILS_SUCCESS,
-  SHIPPING_DETAILS_FAILURE
+  SHIPPING_DETAILS_FAILURE,
+  USER_SHIPPING_DETAILS_LIST_STARTED,
+  USER_SHIPPING_DETAILS_LIST_SUCCESS,
+  USER_SHIPPING_DETAILS_LIST_FAILURE
 } from '../constants/shippingContants';
 import axios from 'axios';
 
@@ -34,5 +37,35 @@ export const saveShippingDetails = (productFormData) => async (dispatch) => {
       payload: error
     });
     console.log('error', error);
+  }
+};
+
+export const userShippingDetailsList = (user) => async (dispatch) => {
+  console.log('userinShipping', user);
+  try {
+    dispatch({
+      type: USER_SHIPPING_DETAILS_LIST_STARTED
+    });
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json'
+      }
+    };
+    const { data } = await axios.post(
+      `http://localhost:8000/api/shipping/useraddresses/`,
+      { user },
+      config
+    );
+    console.log('data', data);
+    dispatch({
+      type: USER_SHIPPING_DETAILS_LIST_SUCCESS,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_SHIPPING_DETAILS_LIST_FAILURE,
+      payload: error
+    });
   }
 };

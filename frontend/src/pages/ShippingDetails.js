@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyledCard, StyledDiv, StyledFormDiv } from './Styled';
+import { StyledCard, StyledDiv, StyledFormDiv, StyledShippingBox } from './Styled';
 import {
   Typography,
   CardContent,
@@ -9,23 +9,27 @@ import {
   Button,
   TextField,
   FormControl,
-  Grid
+  Grid,
+  Box,
+  Checkbox
 } from '@mui/material';
-import { saveShippingDetails } from '../actions/shippingActions';
+import { saveShippingDetails, userShippingDetailsList } from '../actions/shippingActions';
 
 const ShippingDetails = () => {
   const dispatch = useDispatch();
   const [shippindDetails, setShippingDetails] = useState({
     name: '',
-    email: '',
+    user: '',
     address: '',
     mobile: '',
     landmark: '',
     pincode: ''
   });
-  const { email } = useSelector((state) => state.userLoginReducer.loginInfo);
-  console.log('email', email);
-  console.log('shippindDetails', shippindDetails);
+  const { _id, email } = useSelector((state) => state.userLoginReducer.loginInfo);
+  const shippingList = useSelector(
+    (state) => state.userShippingDetailsListReducer.shippingDetailsList
+  );
+  console.log('shippingList', shippingList);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setShippingDetails((prevState) => ({
@@ -42,15 +46,19 @@ const ShippingDetails = () => {
   useEffect(() => {
     setShippingDetails((prevState) => ({
       ...prevState,
-      email: email
+      user: _id
     }));
-  }, [email]);
+  }, [_id]);
+
+  useEffect(() => {
+    dispatch(userShippingDetailsList(shippindDetails.user));
+  }, [shippindDetails.user]);
 
   return (
     <div>
       <Header />
       <Grid container>
-        <Grid item sm={12} md={8}>
+        <Grid item sm={12} md={7}>
           <form onSubmit={handleSubmit}>
             <StyledDiv>
               <StyledCard sx={{ width: '100%' }}>
@@ -73,8 +81,8 @@ const ShippingDetails = () => {
                       <TextField
                         required
                         id="outlined-required"
-                        label="Enter your email"
-                        name="email"
+                        label="Enter your id"
+                        name="user"
                         value={email}
                         disabled
                         onChange={handleChange}
@@ -130,6 +138,35 @@ const ShippingDetails = () => {
               </StyledCard>
             </StyledDiv>
           </form>
+        </Grid>
+        <Grid item sm={12} md={5}>
+          <Box sx={{ marginTop: '20px' }}>
+            <Typography variant="h4">User Shipping Address Lists</Typography>
+            <StyledShippingBox>
+              {shippingList &&
+                shippingList.map((item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: '10px'
+                      }}>
+                      <Checkbox />
+                      <Box>
+                        <Typography>{item.name}</Typography>
+                        <Typography>{item.address}</Typography>
+                        <Typography>{item.mobile}</Typography>
+                        <Typography>{item.landmark}</Typography>
+                        <Typography>{item.pincode}</Typography>
+                      </Box>
+                    </Box>
+                  );
+                })}
+            </StyledShippingBox>
+          </Box>
         </Grid>
       </Grid>
     </div>
